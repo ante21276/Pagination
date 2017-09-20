@@ -5,6 +5,9 @@ div.className= "pagination";
 let ul = document.createElement("UL");
 let search_parent = document.getElementById("search-parent");
 let message = document.createElement("p");
+page.appendChild(message);
+message.innerHTML = "There is no match in our database for searched student.";
+message.style.display = "none";
 let func;
 
 /********************************************
@@ -88,21 +91,21 @@ search_div.appendChild(button_search);
 SEARCH STUDENTS
 ****************/
 function myFunction() {
-    var filter, ul, li, a, i;
-    input = document.getElementById("myInput");
-    filter = input.value.toLowerCase();
-    ul = document.getElementById("students-ul");
-    li = ul.getElementsByTagName("li");
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("h3")[0];
-        if (a.innerHTML.toLowerCase().indexOf(filter) > -1) {
-            li[i].style.display = "block";
-            message.style.display = "none";
-        } else if (a.innerHTML.toLowerCase().indexOf(filter) === -1) {
-            li[i].style.display = "none";
-            div.style.display = "none";
-            page.appendChild(message);
-            message.innerHTML = "There is no match in our database for searched student.";
-        }
-    }
+  let times = 0;
+  var filter, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toLowerCase();
+  for (i = 0; i < students.length; i++) {
+      a = students[i].getElementsByTagName("h3")[0];
+      if (a.innerHTML.toLowerCase().indexOf(filter) > -1) {
+          students[i].style.display = "block";
+          message.style.display = "none";
+      } else {
+          students[i].style.display = "none";
+          times += 1;
+      }
+  }
+  if(times === students.length) {
+    message.style.display = "block";
+  }
 }
