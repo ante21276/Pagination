@@ -1,9 +1,9 @@
-let students = document.getElementById("students-ul").children;
-let page = document.getElementById("page");
+let students = document.querySelector(".student-list").children;
+let page = document.querySelector(".page");
 let div = document.createElement("DIV");
 div.className= "pagination";
 let ul = document.createElement("UL");
-let search_parent = document.getElementById("search-parent");
+let search_parent = document.querySelector(".page-header");
 let message = document.createElement("p");
 page.appendChild(message);
 message.innerHTML = "There is no match in our database for searched student.";
@@ -95,17 +95,27 @@ function myFunction() {
   var filter, a, i;
   input = document.getElementById("myInput");
   filter = input.value.toLowerCase();
-  for (i = 0; i < students.length; i++) {
+  for (i = 0; i < students.length; i++) { // Search filter
       a = students[i].getElementsByTagName("h3")[0];
       if (a.innerHTML.toLowerCase().indexOf(filter) > -1) {
           students[i].style.display = "block";
+          students[i].className += " result";
           message.style.display = "none";
       } else {
           students[i].style.display = "none";
           times += 1;
       }
   }
-  if(times === students.length) {
+
+ if(message.style.display === "block") {  //Press Search to show students after no match
+    for(let m = 0; m < 10; m++) {
+      students[m].style.display = "block";
+      message.style.display = "none";
+      div.style.display = "block";
+      input.value = "";
+    }
+  }else if(times === students.length) { //Display no match search message
     message.style.display = "block";
+    div.style.display = "none";
   }
 }
